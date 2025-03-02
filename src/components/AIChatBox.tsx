@@ -138,23 +138,21 @@ function ChatMessage({ message: { role, content } }: ChatMessageProps) {
       >
         <ReactMarkdown
           components={{
-            a: ({ node, ref, ...props }) => (
+            a: ({ ...props }) => (
               <Link
                 {...props}
                 href={props.href ?? ""}
                 className="text-primary hover:underline"
               />
             ),
-            p: ({ node, ref, ...props }) => (
-              <p {...props} className="mt-3 first:mt-0" />
-            ),
-            ul: ({ node, ref, ...props }) => (
+            p: ({ ...props }) => <p {...props} className="mt-3 first:mt-0" />,
+            ul: ({ ...props }) => (
               <ul
                 {...props}
                 className="mt-3 list-inside list-disc first:mt-0"
               />
             ),
-            li: ({ node, ref, ...props }) => <li {...props} className="mt-1" />,
+            li: ({ ...props }) => <li {...props} className="mt-1" />,
           }}
         >
           {content}
