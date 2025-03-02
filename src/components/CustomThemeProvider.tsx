@@ -18,7 +18,7 @@ export default function ThemeProviders({
     setMounted(true);
   }, []);
 
-  if (!mounted) return <>children</>;
+  if (!mounted) return;
 
   return <ThemeProvider attribute="class">{children}</ThemeProvider>;
 }
