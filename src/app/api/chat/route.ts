@@ -6,7 +6,7 @@ import {
   PromptTemplate,
 } from "@langchain/core/prompts";
 import { ChatOllama } from "@langchain/ollama";
-import { Message as VercelChatMessage, LangChainAdapter, streamText } from "ai";
+import { Message as VercelChatMessage, LangChainAdapter } from "ai";
 import { createStuffDocumentsChain } from "langchain/chains/combine_documents";
 import { createHistoryAwareRetriever } from "langchain/chains/history_aware_retriever";
 import { createRetrievalChain } from "langchain/chains/retrieval";
@@ -26,16 +26,17 @@ export async function POST(req: Request) {
 
     const currentMessageContent = messages[messages.length - 1].content;
 
-    // const { stream, handlers } = streamText();
-
     const chatModel = new ChatOllama({
       model: "llama3.2",
       streaming: true,
-      // callbacks: [handlers],
       verbose: true,
+      cache: true,
     });
 
-    const stream = await chatModel.stream(currentMessageContent);
+    const rephrasingModel = new ChatOllama({
+      model: "llama3.2",
+      verbose: true,
+    });
 
     const rephrasePrompt = ChatPromptTemplate.fromMessages([
       new MessagesPlaceholder("chat_history"),
@@ -50,7 +51,7 @@ export async function POST(req: Request) {
     const retriever = (await getVectorStore()).asRetriever();
 
     const historyWhereRetrievalChain = await createHistoryAwareRetriever({
-      llm: chatModel,
+      llm: rephrasingModel,
       retriever,
       rephrasePrompt,
     });
@@ -60,14 +61,16 @@ export async function POST(req: Request) {
         "system",
         "You're a chatbot for a personal porfolio site. Impersonate the website owner." +
           "Answer the user's questions based on the context below. " +
-          "When necessary, provide links to the pages with information on the topic from the given context" +
+          "When necessary, provide links to the pages with information on the topic from the given context." +
           "Format your messages in markdown.\n\n" +
           "Context:\n{context}",
       ],
+      new MessagesPlaceholder("chat_history"),
       ["user", "{input}"],
     ]);
 
-    const chain = prompt.pipe(chatModel);
+    // const chain = prompt.pipe(chatModel);
+
     const combineDocsChain = await createStuffDocumentsChain({
       llm: chatModel,
       prompt,
@@ -79,12 +82,31 @@ export async function POST(req: Request) {
 
     const retrievalChain = await createRetrievalChain({
       combineDocsChain,
-      retriever,
+      retriever: historyWhereRetrievalChain,
     });
 
-    retrievalChain.invoke({ input: currentMessageContent });
+    const response = await retrievalChain.stream({
+      input: currentMessageContent,
+      chat_history: chatHistory,
+    });
 
-    return LangChainAdapter.toDataStreamResponse(stream);
+    // Create a transformed stream that extracts just the answer part
+    const transformedStream = response.pipeThrough(
+      new TransformStream({
+        transform(chunk, controller) {
+          // For streamed responses, we need to check what property contains the actual content
+          if (chunk.answer) {
+            controller.enqueue(chunk.answer);
+          } else if (chunk.content) {
+            controller.enqueue(chunk.content);
+          } else if (typeof chunk === "string") {
+            controller.enqueue(chunk);
+          }
+        },
+      })
+    );
+
+    return LangChainAdapter.toDataStreamResponse(transformedStream);
   } catch (error) {
     console.error(error);
     return Response.json({ error: "Internal server error" }, { status: 500 });
