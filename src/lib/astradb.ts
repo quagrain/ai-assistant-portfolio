@@ -1,4 +1,4 @@
-import { Db, DataAPIClient } from "@datastax/astra-db-ts";
+import { DataAPIClient } from "@datastax/astra-db-ts";
 import { AstraDBVectorStore } from "@langchain/community/vectorstores/astradb";
 import { OllamaEmbeddings } from "@langchain/ollama";
 
@@ -8,7 +8,7 @@ const token = process.env.ASTRA_DB_APPLICATION_TOKEN || "";
 
 if (!endpoint || !collection || !token) {
   throw new Error(
-    "Please set the ASTRA_DB_ENDPOINT, ASTRA_DB_COLLECTION, ASTRA_DB_APPLICATION_TOKEN env variables",
+    "Please set the ASTRA_DB_ENDPOINT, ASTRA_DB_COLLECTION, ASTRA_DB_APPLICATION_TOKEN env variables"
   );
 }
 
@@ -23,7 +23,7 @@ export async function getVectorStore() {
       endpoint,
       collection,
       collectionOptions: { vector: { dimension: 1024 } },
-    },
+    }
   );
 }
 

@@ -36,6 +36,7 @@ export async function POST(req: Request) {
     const rephrasingModel = new ChatOllama({
       model: "llama3.2",
       verbose: true,
+      cache: true,
     });
 
     const rephrasePrompt = ChatPromptTemplate.fromMessages([
