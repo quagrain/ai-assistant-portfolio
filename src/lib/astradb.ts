@@ -1,6 +1,6 @@
-import { AstraDB } from "@datastax/astra-db-ts";
+import { Db, DataAPIClient } from "@datastax/astra-db-ts";
 import { AstraDBVectorStore } from "@langchain/community/vectorstores/astradb";
-import { OpenAIEmbeddings } from "@langchain/openai";
+import { OllamaEmbeddings } from "@langchain/ollama";
 
 const endpoint = process.env.ASTRA_DB_ENDPOINT || "";
 const collection = process.env.ASTRA_DB_COLLECTION || "";
@@ -14,15 +14,22 @@ if (!endpoint || !collection || !token) {
 
 export async function getVectorStore() {
   return AstraDBVectorStore.fromExistingIndex(
-    new OpenAIEmbeddings({ modelName: "text-embedding-3-small" }),
+    new OllamaEmbeddings({
+      model: "mxbai-embed-large",
+      baseUrl: "http://localhost:11434",
+    }),
     {
       token,
       endpoint,
-      collectionOptions: { vector: { dimension: 1536, metric: "cosine" } },
+      collection,
+      collectionOptions: { vector: { dimension: 1024 } },
     },
   );
 }
 
 export async function getEmbeddingsCollection() {
-  return new AstraDB(token, endpoint).collection(collection);
+  const client = new DataAPIClient(token);
+  const database = client.db(endpoint);
+
+  return database.collection(collection);
 }
