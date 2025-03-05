@@ -1,19 +1,19 @@
-import Image from "next/image";
-import H1 from "@/components/H1";
+import Image, { StaticImageData } from "next/image";
 import { Badge } from "@/components/ui/badge";
+import H1 from "@/components/H1";
 
 interface HeroProps {
   title: string;
-  imgSrc: string;
   imgAlt: string;
   description: string;
   badgeItems: string[];
+  img: StaticImageData;
 }
 
 export default function Hero({
   title,
   imgAlt,
-  imgSrc,
+  img,
   description,
   badgeItems,
 }: HeroProps) {
@@ -24,7 +24,7 @@ export default function Hero({
       <div className="relative flex flex-col items-center gap-6 md:flex-row">
         <div className="relative h-48 w-48 overflow-hidden rounded-full border-4 border-primary/30 shadow-xl">
           <Image
-            src={imgSrc}
+            src={img}
             alt={imgAlt}
             fill
             className="object-cover"

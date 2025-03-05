@@ -2,9 +2,10 @@ import ExperienceCard, { ExperienceProps } from "./components/ExperienceCard";
 import Education, { EducationProps } from "./components/EducationCard";
 import SkillCard, { SkillCardProps } from "./components/SkillCard";
 import BottomCard from "./components/BottomCard";
-import H2 from "@/components/H2";
 import Whoami from "./components/Whoami";
+import me from "@/assets/profile.png";
 import Hero from "./components/Hero";
+import H2 from "@/components/H2";
 
 import { Metadata } from "next";
 import {
@@ -97,6 +98,8 @@ export default function Page() {
     <section className="container mx-auto max-w-4xl space-y-12 py-8">
       <Hero
         title="About Me"
+        img={me}
+        imgAlt="Victor Quagraine"
         badgeItems={heroBadgeItems}
         description="Full-Stack Developer with a passion for creating impactful solutions"
       />
