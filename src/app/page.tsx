@@ -1,13 +1,13 @@
 import me from "@/assets/profile.png";
 import { H1 } from "@/components/H1";
 import { H2 } from "@/components/H2";
+import SkillCard from "@/components/SkillCard";
+import ProjectCard from "@/components/ProjectCard";
 
 import Link from "next/link";
 import Image from "next/image";
 import { Metadata } from "next";
 import { Bot } from "lucide-react";
-import SkillCard from "@/components/SkillCard";
-import ProjectCard from "@/components/ProjectCard";
 
 export const metadata: Metadata = {
   title: "Victor's Portfolio",
