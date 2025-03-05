@@ -1,10 +1,10 @@
-import ExperienceCard, { ExperienceProps } from "./ExperienceCard";
-import Education, { EducationProps } from "./EducationCard";
-import SkillCard, { SkillCardProps } from "./SkillCard";
-import BottomCard from "./BottomCard";
+import ExperienceCard, { ExperienceProps } from "./components/ExperienceCard";
+import Education, { EducationProps } from "./components/EducationCard";
+import SkillCard, { SkillCardProps } from "./components/SkillCard";
+import BottomCard from "./components/BottomCard";
 import H2 from "@/components/H2";
-import Whoami from "./Whoami";
-import Hero from "./Hero";
+import Whoami from "./components/Whoami";
+import Hero from "./components/Hero";
 
 import { Metadata } from "next";
 import {

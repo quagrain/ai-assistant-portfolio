@@ -1,6 +1,6 @@
 import me from "@/assets/profile.png";
-import { H1 } from "@/components/H1";
-import { H2 } from "@/components/H2";
+import H1 from "@/components/H1";
+import H2 from "@/components/H2";
 import SkillCard from "@/components/SkillCard";
 import ProjectCard from "@/components/ProjectCard";
 
