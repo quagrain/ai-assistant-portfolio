@@ -1,18 +1,18 @@
 import me from "@/assets/profile.png";
-import { H1 } from "@/components/ui/H1";
-import { H2 } from "@/components/ui/H2";
+import { H1 } from "@/components/H1";
+import { H2 } from "@/components/H2";
 
 import Link from "next/link";
 import Image from "next/image";
 import { Metadata } from "next";
 import { Bot } from "lucide-react";
-import SkillCard from "@/components/ui/SkillCard";
+import SkillCard from "@/components/SkillCard";
 
 export const metadata: Metadata = {
   title: "Smart Portfolio",
 };
 
-const skills = [
+const skills: string[] = [
   "Frontend Development",
   "Backend Engineering",
   "UI/UX Design",
@@ -21,7 +21,7 @@ const skills = [
   "Machine Learning",
 ];
 
-const projects = [
+const projects: { title: string; description: string; tech: string }[] = [
   {
     title: "Project Alpha",
     description: "A full-stack web application with real-time features",

@@ -1,4 +1,4 @@
-import { H3 } from "@/components/ui/H3";
+import { H3 } from "@/components/H3";
 
 export default function Page() {
   return (
