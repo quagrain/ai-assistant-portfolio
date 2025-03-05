@@ -1,12 +1,10 @@
 import { cn } from "@/lib/utils";
-import { Message, useChat } from "ai/react";
-import { Bot, SendHorizonal, Trash, XCircle } from "lucide-react";
+
 import Link from "next/link";
 import { useEffect, useRef } from "react";
 import ReactMarkdown from "react-markdown";
-
-// TODO: Replace deprecated useChat
-// import { useChat } from "@ai-sdk/react";
+import { useChat, Message } from "@ai-sdk/react";
+import { Bot, SendHorizonal, Trash, XCircle } from "lucide-react";
 
 interface AIChatBoxProps {
   open: boolean;
@@ -15,13 +13,13 @@ interface AIChatBoxProps {
 
 export default function AIChatBox({ open, onClose }: AIChatBoxProps) {
   const {
-    handleInputChange,
-    handleSubmit,
-    setMessages,
-    isLoading,
-    messages,
-    error,
     input,
+    error,
+    status,
+    messages,
+    setMessages,
+    handleSubmit,
+    handleInputChange,
   } = useChat();
 
   const inputRef = useRef<HTMLInputElement>(null);
@@ -56,7 +54,7 @@ export default function AIChatBox({ open, onClose }: AIChatBoxProps) {
           {messages.map((message) => (
             <ChatMessage message={message} key={message.id} />
           ))}
-          {isLoading && lastMessageIsUser && (
+          {status === "submitted" && lastMessageIsUser && (
             <ChatMessage
               message={{
                 id: "loading",
@@ -108,7 +106,7 @@ export default function AIChatBox({ open, onClose }: AIChatBoxProps) {
           <button
             type="submit"
             className="flex items-center justify-center w-10 flex-none disabled:opacity-50"
-            disabled={isLoading || input.length === 0}
+            disabled={status == "submitted" || input.length === 0}
           >
             <SendHorizonal size={24} />
           </button>

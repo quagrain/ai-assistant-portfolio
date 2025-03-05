@@ -21,7 +21,7 @@ export async function POST(req: Request) {
       .map((m: VercelChatMessage) =>
         m.role === "user"
           ? new HumanMessage(m.content)
-          : new AIMessage(m.content),
+          : new AIMessage(m.content)
       );
 
     const currentMessageContent = messages[messages.length - 1].content;
@@ -49,7 +49,8 @@ export async function POST(req: Request) {
       ],
     ]);
 
-    const retriever = (await getVectorStore()).asRetriever();
+    // TODO-DOCS: In docs, if all pages are not being fetched from the db.
+    const retriever = (await getVectorStore()).asRetriever(4);
 
     const historyWhereRetrievalChain = await createHistoryAwareRetriever({
       llm: rephrasingModel,
@@ -57,12 +58,15 @@ export async function POST(req: Request) {
       rephrasePrompt,
     });
 
+    // TODO-DOCS: Change system prompt based on website use case
     const prompt = ChatPromptTemplate.fromMessages([
       [
         "system",
         "You're a chatbot for a personal porfolio site. Impersonate the website owner." +
           "Answer the user's questions based ONLY on the context below. " +
           "When necessary, provide links to the pages (pages that exists ONLY) with information on the topic using the given context." +
+          "If the user asks a question about the website owner that you cannot find, provide a link to the socials page encouraging them to reach out to the owner (who is a nice person)" +
+          "NEVER ask the user to click on the bot icon. CAPICHE?!" +
           "Format your messages in markdown.\n\n" +
           "Context:\n{context}",
       ],
@@ -70,13 +74,11 @@ export async function POST(req: Request) {
       ["user", "{input}"],
     ]);
 
-    // const chain = prompt.pipe(chatModel);
-
     const combineDocsChain = await createStuffDocumentsChain({
       llm: chatModel,
       prompt,
       documentPrompt: PromptTemplate.fromTemplate(
-        "Page URL: {url}\n\nPage content:\n{page_content}",
+        "Page URL: {url}\n\nPage content:\n{page_content}"
       ),
       documentSeparator: "\n--------\n",
     });
@@ -104,7 +106,7 @@ export async function POST(req: Request) {
             controller.enqueue(chunk);
           }
         },
-      }),
+      })
     );
 
     return LangChainAdapter.toDataStreamResponse(transformedStream);
