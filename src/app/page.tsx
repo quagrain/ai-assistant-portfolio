@@ -7,18 +7,19 @@ import Image from "next/image";
 import { Metadata } from "next";
 import { Bot } from "lucide-react";
 import SkillCard from "@/components/SkillCard";
+import ProjectCard from "@/components/ProjectCard";
 
 export const metadata: Metadata = {
-  title: "Smart Portfolio",
+  title: "Victor's Portfolio",
 };
 
 const skills: string[] = [
-  "Frontend Development",
-  "Backend Engineering",
   "UI/UX Design",
-  "Database Management",
-  "Mobile Development",
   "Machine Learning",
+  "Mobile Development",
+  "Database Management",
+  "Backend Engineering",
+  "Frontend Development",
 ];
 
 const projects: { title: string; description: string; tech: string }[] = [
@@ -65,7 +66,8 @@ export default function Home() {
             alt="An AI generated image of a chef in a kitchen typing on his computer with some utensils in the background"
             height={300}
             width={300}
-            className="dark:border-foreground aspect-square rounded-full border-2 object-cover shadow-md"
+            className="aspect-square rounded-full border-2 object-cover shadow-md
+                       dark:border-primary dark:shadow-[7px_-10px_15px_8px] dark:shadow-primary/70"
           />
         </div>
       </section>
@@ -83,8 +85,8 @@ export default function Home() {
       <section className="space-y-6">
         <H2 className="text-center">Skills & Expertise</H2>
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3">
-          {skills.map((skill) => (
-            <SkillCard key={skill} skill={skill} />
+          {skills.map((skill, index) => (
+            <SkillCard key={index} skill={skill} />
           ))}
         </div>
       </section>
@@ -93,16 +95,7 @@ export default function Home() {
         <H2 className="text-center">Featured Projects</H2>
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
           {projects.map((project, index) => (
-            <div
-              key={index}
-              className="rounded-lg border bg-card p-6 shadow-sm"
-            >
-              <h3 className="mb-2 text-xl font-semibold">{project.title}</h3>
-              <p className="mb-4 text-muted-foreground">
-                {project.description}
-              </p>
-              <p className="text-sm font-medium text-primary">{project.tech}</p>
-            </div>
+            <ProjectCard key={index} project={project} />
           ))}
         </div>
         <div className="text-center">
