@@ -75,13 +75,13 @@ const technicalSkills: SkillCardProps[] = [
   },
   {
     Icon: GanttChart,
-    color: "secondary",
+    color: "accent",
     skill: "Backend",
     description: "Node.js, Express, MongoDB",
   },
   {
     Icon: GitBranch,
-    color: "destructive",
+    color: "primary",
     skill: "DevOps",
     description: "Docker, Kubernetes, CI/CD",
   },
