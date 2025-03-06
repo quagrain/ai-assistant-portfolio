@@ -14,9 +14,9 @@
       --card-foreground: 222 47% 11%;
       --popover: 0 0% 100%;
       --popover-foreground: 222 47% 11%;
-      --primary: 358 85% 52%;
+      --primary: 358 85% 50%;
       --primary-foreground: 210 40% 98%;
-      --secondary: 260 100% 60%;
+      --secondary: 260 100% 80%;
       --secondary-foreground: 222 47% 11%;
       --muted: 210 40% 96.1%;
       --muted-foreground: 215 16% 47%;
@@ -42,9 +42,9 @@
       --card-foreground: 0 0% 98%;
       --popover: 0 0% 3.9%;
       --popover-foreground: 0 0% 98%;
-      --primary: 0 72.2% 50.6%;
+      --primary: 358 85% 50%;
       --primary-foreground: 0 85.7% 97.3%;
-      --secondary: 260 100% 80%;
+      --secondary: 250 100% 60%;
       --secondary-foreground: 0 0% 98%;
       --muted: 0 0% 14.9%;
       --muted-foreground: 0 0% 63.9%;
@@ -66,7 +66,7 @@
 
 @layer base {
   * {
-    border: "hsl(var(--border))";
+    border: hsl(var(--border));
   }
   body {
     @apply bg-background text-foreground;
