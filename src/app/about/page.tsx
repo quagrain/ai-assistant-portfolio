@@ -1,22 +1,14 @@
-import ExperienceCard, { ExperienceProps } from "./components/ExperienceCard";
-import Education, { EducationProps } from "./components/EducationCard";
-import SkillCard, { SkillCardProps } from "./components/SkillCard";
+import ExperienceCard, {ExperienceProps} from "./components/ExperienceCard";
+import Education, {EducationProps} from "./components/EducationCard";
+import SkillCard, {SkillCardProps} from "./components/SkillCard";
 import BottomCard from "./components/BottomCard";
 import Whoami from "./components/Whoami";
 import me from "@/assets/profile.png";
 import Hero from "./components/Hero";
 import H2 from "@/components/H2";
 
-import { Metadata } from "next";
-import {
-  Code,
-  Cpu,
-  Briefcase,
-  GitBranch,
-  Smartphone,
-  GanttChart,
-  GraduationCap,
-} from "lucide-react";
+import {Metadata} from "next";
+import {Briefcase, Code, Cpu, GanttChart, GitBranch, GraduationCap, Smartphone,} from "lucide-react";
 
 export const metadata: Metadata = {
   title: "About Victor | Portfolio",
@@ -75,19 +67,19 @@ const technicalSkills: SkillCardProps[] = [
   },
   {
     Icon: GanttChart,
-    color: "accent",
+    color: "secondary",
     skill: "Backend",
     description: "Node.js, Express, MongoDB",
   },
   {
     Icon: GitBranch,
-    color: "primary",
+    color: "accent",
     skill: "DevOps",
     description: "Docker, Kubernetes, CI/CD",
   },
   {
     Icon: Smartphone,
-    color: "accent",
+    color: "primary",
     skill: "Mobile",
     description: "React Native, Flutter, Swift",
   },
@@ -105,12 +97,12 @@ export default function Page() {
       />
 
       <div className="space-y-12">
-        <Whoami description={whoamiDescription} />
+        <Whoami description={whoamiDescription}/>
 
         {/* Education Section */}
         <div className="space-y-6">
           <div className="flex items-center gap-3">
-            <GraduationCap className="h-6 w-6 text-primary" />
+            <GraduationCap className="h-6 w-6 text-primary"/>
             <H2 className="text-2xl">Education</H2>
           </div>
           {educationDetails.map((education, index) => (
@@ -121,7 +113,7 @@ export default function Page() {
         {/* Experience Section */}
         <div className="space-y-6">
           <div className="flex items-center gap-3">
-            <Briefcase className="h-6 w-6 text-primary" />
+            <Briefcase className="h-6 w-6 text-primary"/>
             <H2 className="text-2xl">Professional Experience</H2>
           </div>
           <div className="grid gap-6 sm:grid-cols-2">
@@ -134,7 +126,7 @@ export default function Page() {
         {/* Skills Section */}
         <div className="space-y-6">
           <div className="flex items-center gap-3">
-            <Cpu className="h-6 w-6 text-primary" />
+            <Cpu className="h-6 w-6 text-primary"/>
             <H2 className="text-2xl">Technical Skills</H2>
           </div>
           <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
