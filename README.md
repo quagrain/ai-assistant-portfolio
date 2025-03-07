@@ -1,20 +1,5 @@
 # AI Assisant Portfolio
 
-## Table of Contents
-
-- [Overview](#overview)
-- [Prerequisites](#prerequisites)
-- [Getting Started](#getting-started)
-  - [Installation](#installation)
-  - [Environment Setup](#environment-setup)
-  - [AstraDB Setup](#astradb-setup)
-  - [Ollama Setup](#ollama-setup)
-  - [Building and Running](#building-and-running)
-- [Project Structure](#project-structure)
-- [Customization](#customization)
-- [Troubleshooting](#troubleshooting)
-- [Contributing](#contributing)
-
 ## Overview
 
 This is a portfolio website that includes a chatbot that answers user questions using content from your pages.
