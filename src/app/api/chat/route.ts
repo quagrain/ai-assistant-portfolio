@@ -53,7 +53,6 @@ export async function POST(req: Request) {
       rephrasePrompt,
     });
 
-    // TODO-DOCS: Change system prompt based on website use case
     const prompt = ChatPromptTemplate.fromMessages([
       [
         "system",
