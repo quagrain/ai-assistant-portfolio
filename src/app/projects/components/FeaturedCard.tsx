@@ -8,7 +8,7 @@ import {Card, CardContent, CardDescription, CardFooter} from "@/components/ui/ca
 import Link from "next/link";
 import Image from "next/image";
 import {useEffect, useState} from "react";
-import {ChevronDown, ChevronUp, ExternalLink, Github} from "lucide-react";
+import {ChevronDown, ChevronUp, Code, ExternalLink} from "lucide-react";
 import {Popover, PopoverContent, PopoverTrigger} from "@radix-ui/react-popover";
 
 export interface ProjectCardProps {
@@ -23,7 +23,7 @@ export interface ProjectCardProps {
 }
 
 export default function FeaturedCard({project}: { project: ProjectCardProps }) {
-  const {title, image, liveUrl, githubUrl, description, longDescription, techStack, featured} = project;
+  const {title, image, liveUrl, githubUrl, description, longDescription, techStack} = project;
   const [isMobile, setIsMobile] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
 
@@ -89,7 +89,7 @@ export default function FeaturedCard({project}: { project: ProjectCardProps }) {
             {githubUrl && (
               <Link href={githubUrl} target="_blank"
                     className="flex items-center gap-2 text-sm text-primary hover:underline">
-                <Github size={16}/>View Code
+                <Code size={16}/>View Code
               </Link>
             )}
             {liveUrl && (

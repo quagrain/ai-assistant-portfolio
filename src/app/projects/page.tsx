@@ -1,8 +1,8 @@
 import H1 from "@/components/H1";
 import H2 from "@/components/H2";
 import BottomCard from "@/app/about/components/BottomCard";
-import FeaturedCard, {ProjectCardProps} from "./components/FeaturedCard";
 import OtherCard from "@/app/projects/components/OtherCard";
+import FeaturedCard, {ProjectCardProps} from "./components/FeaturedCard";
 
 import {Metadata} from "next";
 
