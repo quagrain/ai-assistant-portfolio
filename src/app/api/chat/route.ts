@@ -1,15 +1,11 @@
-import { getVectorStore } from "@/lib/astradb";
-import { AIMessage, HumanMessage } from "@langchain/core/messages";
-import {
-  ChatPromptTemplate,
-  MessagesPlaceholder,
-  PromptTemplate,
-} from "@langchain/core/prompts";
-import { ChatOllama } from "@langchain/ollama";
-import { Message as VercelChatMessage, LangChainAdapter } from "ai";
-import { createStuffDocumentsChain } from "langchain/chains/combine_documents";
-import { createHistoryAwareRetriever } from "langchain/chains/history_aware_retriever";
-import { createRetrievalChain } from "langchain/chains/retrieval";
+import {getVectorStore} from "@/lib/astradb";
+import {AIMessage, HumanMessage} from "@langchain/core/messages";
+import {ChatPromptTemplate, MessagesPlaceholder, PromptTemplate,} from "@langchain/core/prompts";
+import {ChatOllama} from "@langchain/ollama";
+import {LangChainAdapter, Message as VercelChatMessage} from "ai";
+import {createStuffDocumentsChain} from "langchain/chains/combine_documents";
+import {createHistoryAwareRetriever} from "langchain/chains/history_aware_retriever";
+import {createRetrievalChain} from "langchain/chains/retrieval";
 
 export async function POST(req: Request) {
   try {
@@ -45,12 +41,11 @@ export async function POST(req: Request) {
       [
         "user",
         "Given the above conversation, generate a search query to look up to get information relevant to the current question. " +
-          "Don't leave out any relevant keywords. Only return the query and no other text.",
+        "Don't leave out any relevant keywords. Only return the query and no other text.",
       ],
     ]);
 
-    // TODO-DOCS: In docs, if all pages are not being fetched from the db.
-    const retriever = (await getVectorStore()).asRetriever(4);
+    const retriever = (await getVectorStore()).asRetriever();
 
     const historyWhereRetrievalChain = await createHistoryAwareRetriever({
       llm: rephrasingModel,
@@ -63,12 +58,12 @@ export async function POST(req: Request) {
       [
         "system",
         "You're a chatbot for a personal porfolio site. Impersonate the website owner." +
-          "Answer the user's questions based ONLY on the context below. " +
-          "When necessary, provide links to the pages (pages that exists ONLY) with information on the topic using the given context." +
-          "If the user asks a question about the website owner that you cannot find, provide a link to the socials page encouraging them to reach out to the owner (who is a nice person)" +
-          "NEVER ask the user to click on the bot icon. CAPICHE?!" +
-          "Format your messages in markdown.\n\n" +
-          "Context:\n{context}",
+        "Answer the user's questions based ONLY on the context below. " +
+        "When necessary, provide links to the pages (pages that exists ONLY) with information on the topic using the given context." +
+        "If the user asks a question about the website owner that you cannot find, provide a link to the socials page encouraging them to reach out to the owner (who is a nice person)" +
+        "NEVER ask the user to click on the bot icon. CAPICHE?!" +
+        "Format your messages in markdown.\n\n" +
+        "Context:\n{context}",
       ],
       new MessagesPlaceholder("chat_history"),
       ["user", "{input}"],
@@ -102,8 +97,6 @@ export async function POST(req: Request) {
             controller.enqueue(chunk.answer);
           } else if (chunk.content) {
             controller.enqueue(chunk.content);
-          } else if (typeof chunk === "string") {
-            controller.enqueue(chunk);
           }
         },
       })
@@ -112,6 +105,6 @@ export async function POST(req: Request) {
     return LangChainAdapter.toDataStreamResponse(transformedStream);
   } catch (error) {
     console.error(error);
-    return Response.json({ error: "Internal server error" }, { status: 500 });
+    return Response.json({error: "Internal server error"}, {status: 500});
   }
 }

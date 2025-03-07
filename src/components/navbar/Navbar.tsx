@@ -20,7 +20,7 @@ const links: LinkProps[] = [
 ];
 
 // Update this to also match the links above. Needed for the button in the BottomCard component
-export type NavLinkHref = | "/" | "/about" | "/projects" | "/social";
+export type NavLinkHref = "/" | "/about" | "/projects" | "/social";
 
 export default function Navbar() {
   const pathname = usePathname();
