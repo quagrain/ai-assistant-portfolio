@@ -1,13 +1,14 @@
-import me from "@/assets/profile.png";
 import H1 from "@/components/H1";
 import H2 from "@/components/H2";
+import me from "@/assets/profile.png";
+import {Button} from "@/components/ui/button";
 import SkillCard from "@/components/SkillCard";
 import ProjectCard from "@/components/ProjectCard";
 
 import Link from "next/link";
 import Image from "next/image";
-import { Metadata } from "next";
-import { Bot } from "lucide-react";
+import {Metadata} from "next";
+import {Bot} from "lucide-react";
 
 export const metadata: Metadata = {
   title: "Victor's Portfolio",
@@ -48,14 +49,10 @@ export default function Home() {
           </p>
           <div className="flex justify-center sm:justify-start gap-3 pt-2">
             <Link href="/about">
-              <button className="rounded-md bg-primary px-4 py-2 text-primary-foreground hover:bg-primary/90">
-                About Me
-              </button>
+              <Button>About Me</Button>
             </Link>
             <Link href="/social">
-              <button className="rounded-md border border-input bg-background px-4 py-2 hover:bg-accent hover:text-accent-foreground">
-                Connect
-              </button>
+              <Button variant="secondary">Social Media</Button>
             </Link>
           </div>
         </div>
@@ -100,9 +97,7 @@ export default function Home() {
         </div>
         <div className="text-center">
           <Link href="/projects">
-            <button className="rounded-md border border-input bg-background px-4 py-2 hover:bg-accent hover:text-accent-foreground">
-              View All Projects
-            </button>
+            <Button>View All Projects</Button>
           </Link>
         </div>
       </section>

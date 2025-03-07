@@ -138,8 +138,8 @@ export default function Page() {
 
         {/* Projects/ Contact Section */}
         <BottomCard
-          left_button="View Projects"
-          right_button="Get in Touch"
+          left_button={{label: "View Projects", href: "/projects"}}
+          right_button={{label: "Get In Touch", href: "/social"}}
           header="Interested in working with me?"
           details="I am always open to new opportunities and collaborations. Feel free to reach out to me for any inquiries or just to say hi!"
         />

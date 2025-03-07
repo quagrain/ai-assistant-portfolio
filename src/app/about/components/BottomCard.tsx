@@ -1,11 +1,13 @@
 import Link from "next/link";
 import {Button} from "@/components/ui/button";
 
+import {NavLinkHref} from "@/components/navbar/Navbar";
+
 interface BottomCardProps {
   header: string;
   details: string;
-  left_button: string;
-  right_button: string;
+  left_button: { label: string; href: NavLinkHref };
+  right_button: { label: string; href: NavLinkHref };
 }
 
 export default function BottomCard({
@@ -20,13 +22,13 @@ export default function BottomCard({
       <h3 className="text-2xl font-bold">{header}</h3>
       <p className="max-w-md text-muted-foreground">{details}</p>
       <div className="flex gap-4">
-        <Link href="/projects">
+        <Link href={left_button.href}>
           <Button className="transition-colors hover:bg-primary/90">
-            {left_button}
+            {left_button.label}
           </Button>
         </Link>
-        <Link href="/social">
-          <Button variant="secondary">{right_button}</Button>
+        <Link href={right_button.href}>
+          <Button variant="secondary">{right_button.label}</Button>
         </Link>
       </div>
     </div>
